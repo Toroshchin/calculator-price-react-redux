@@ -1,5 +1,9 @@
 const initialState = {
   fullPrice: 0,
+  activeEducation: 0,
+  activeTypeEducation: 0,
+  module: 0,
+  fullPeople: 0,
   region: [
     { key: 1, value: 'Алтайский край', text: 'Алтайский край' },
     { key: 2, value: 'Амурская область', text: 'Амурская область' },
@@ -90,7 +94,7 @@ const initialState = {
   education: [
     {
       key: 1,
-      value: 'ИТСО',
+      value: 1,
       text: 'Интернет-тренажоры в сфере образования (март-июль 2021)',
       prices: [
         [
@@ -101,17 +105,17 @@ const initialState = {
           { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
         ],
         [
-          { minPeople: 1, maxPeople: 250, price: [25200, 29500, 37600] },
-          { minPeople: 251, maxPeople: 500, price: [33000, 37200, 40700] },
-          { minPeople: 501, maxPeople: 1000, price: [40700, 46300, 52000] },
-          { minPeople: 1001, maxPeople: 3000, price: [52000, 56900, 60900] },
-          { minPeople: 3000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+          { minPeople: 1, maxPeople: 250, price: [10200, 12500, 14700] },
+          { minPeople: 251, maxPeople: 500, price: [14200, 15300, 16400] },
+          { minPeople: 501, maxPeople: 1000, price: [17800, 19400, 20800] },
+          { minPeople: 1001, maxPeople: 3000, price: [22800, 23700, 24400] },
+          { minPeople: 3000, maxPeople: 1000000, price: [26700, 27800, 29900] },
         ],
       ],
     },
     {
       key: 2,
-      value: 'ТФИЭВБ',
+      value: 2,
       text: 'Тренажёр Федерального интернет-экзамена для выпускников бакалавриата (Тренажёр ФИЭБ-2021)',
       prices: [
         { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
@@ -122,8 +126,8 @@ const initialState = {
       ],
     },
     {
-      key: 4,
-      value: 'ФИЭПО',
+      key: 3,
+      value: 3,
       text: 'Федеральный интернет-экзамен в сфере профессионального образования (ФЭПО) (март-июль 2021)',
       prices: [
         { minPeople: 1, maxPeople: 1000, price: 27400 },
@@ -133,7 +137,7 @@ const initialState = {
         { minPeople: 30000, maxPeople: 1000000, price: 59900 },
       ],
     },
-    { key: 5, value: 'ФИЭВБ', text: 'Федеральный интернет-экзамен для выпускников бакалавриата 2021 (Вузы-участники)' },
+    { key: 4, value: 4, text: 'Федеральный интернет-экзамен для выпускников бакалавриата 2021 (Вузы-участники)' },
   ],
 }
 export default initialState

@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import { Container, Header, Form, Input, Dropdown, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux'
-import { selectEducation } from '../actions/index'
+import { selectEducation } from '../actions/selectEducation'
+import { selectTypeEducation } from '../actions/selectTypeEdication'
+import { selectModuleEducation } from '../actions/selectModuleEducation'
+import { readingInput } from '../actions/readingInput'
 import { bindActionCreators } from 'redux';
 
 class RegistrationAplication extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      price: 0,
+    }
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    console.log('[eqw');
+
+  }
+
   render() {
     return (
       <Container>
@@ -13,7 +28,7 @@ class RegistrationAplication extends Component {
           <Form.Field>
             <label>Тип образования*</label>
             <Dropdown
-              onChange={() => this.props.selectEducation(this.props.education[2])}
+              onChange={(e, data) => this.props.selectEducation(data)}
               placeholder='Выбор образования'
               search
               selection
@@ -33,51 +48,59 @@ class RegistrationAplication extends Component {
           <Form.Group grouped>
             <label>Тип образовательной организации (ОО)*</label>
             <Form.Field
+              onChange={e => this.props.selectTypeEducation(e.target.value)}
+              value={1}
               label='ВУЗ(Программы ВО)'
               control='input'
               type='radio'
               name='typeEdication'
             />
             <Form.Field
+              onChange={e => this.props.selectTypeEducation(e.target.value)}
+              value={2}
               label='ВУЗ (программы СПО)'
               control='input'
               type='radio'
               name='typeEdication'
             />
             <Form.Field
+              onChange={e => this.props.selectTypeEducation(e.target.value)}
+              value={3}
               label='ССУЗ'
               control='input'
               type='radio'
               name='typeEdication'
             />
-
           </Form.Group>
 
-          <Form.Field>
+          <Form.Group grouped>
             <label>Услуги*</label>
             <Form.Field
+              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
               label='студенческий режим «Обучение» и «Самоконтроль»'
               control='input'
               type='checkbox'
               name='typeModules'
             />
             <Form.Field
+              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
               label='преподавательский режим «Текущий контроль», включая режим «Сессия», по федеральным ПИМ'
               control='input'
               type='checkbox'
               name='typeModules'
             />
             <Form.Field
+              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
               label='модуль «Тест-Конструктор» и преподавательский режим «Текущий контроль», включая режим «Сессия», по ПИМ, разработанным преподавателями образовательной организации'
               control='input'
               type='checkbox'
               name='typeModules'
             />
-          </Form.Field>
+          </Form.Group>
 
           <Form.Field >
             <label>Общая численность студентов, обучающихся в ОО*</label>
-            <Input placeholder='Введите численность студентов' />
+            <Input onChange={e => this.props.readingInput(e.target.value)} placeholder='Введите численность студентов' />
           </Form.Field>
           <Button>Регистрация</Button>
           <label>Общая цена: {this.props.fullPrice}</label>
@@ -96,9 +119,14 @@ const mapStateToProps = (store) => {
   };
 };
 
-const matchDistatchToProps = (dispatch) => {
-  return bindActionCreators({ selectEducation: selectEducation }, dispatch)
+const mapDistatchToProps = (dispatch) => {
+  return bindActionCreators({
+    selectEducation: selectEducation,
+    selectTypeEducation: selectTypeEducation,
+    selectModuleEducation: selectModuleEducation,
+    readingInput: readingInput,
+  }, dispatch)
 }
 
-export default connect(mapStateToProps, matchDistatchToProps)(RegistrationAplication);
+export default connect(mapStateToProps, mapDistatchToProps)(RegistrationAplication);
 

@@ -5,21 +5,11 @@ import { selectEducation } from '../actions/selectEducation'
 import { selectTypeEducation } from '../actions/selectTypeEdication'
 import { selectModuleEducation } from '../actions/selectModuleEducation'
 import { readingInput } from '../actions/readingInput'
+import { showModules } from '../actions/showModules'
+import { resetModules } from '../actions/resetModules'
 import { bindActionCreators } from 'redux';
 
 class RegistrationAplication extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      price: 0,
-    }
-  }
-
-  UNSAFE_componentWillReceiveProps(nextProps) {
-    console.log('[eqw');
-
-  }
-
   render() {
     return (
       <Container>
@@ -28,7 +18,7 @@ class RegistrationAplication extends Component {
           <Form.Field>
             <label>Тип образования*</label>
             <Dropdown
-              onChange={(e, data) => this.props.selectEducation(data)}
+              onChange={(e, data) => { this.props.selectEducation(data); this.props.showModule(); this.props.resetModules() }}
               placeholder='Выбор образования'
               search
               selection
@@ -48,7 +38,7 @@ class RegistrationAplication extends Component {
           <Form.Group grouped>
             <label>Тип образовательной организации (ОО)*</label>
             <Form.Field
-              onChange={e => this.props.selectTypeEducation(e.target.value)}
+              onChange={e => { this.props.selectTypeEducation(e.target.value); this.props.readingInput() }}
               value={1}
               label='ВУЗ(Программы ВО)'
               control='input'
@@ -63,41 +53,30 @@ class RegistrationAplication extends Component {
               type='radio'
               name='typeEdication'
             />
-            <Form.Field
+            {/* <Form.Field
               onChange={e => this.props.selectTypeEducation(e.target.value)}
               value={3}
               label='ССУЗ'
               control='input'
               type='radio'
               name='typeEdication'
-            />
-          </Form.Group>
+            /> */}
 
-          <Form.Group grouped>
+          </Form.Group>
+          {this.props.showModules === true && this.props.education[this.props.activeEducation].moduleOff === true ? <Form.Group grouped>
             <label>Услуги*</label>
-            <Form.Field
-              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
-              label='студенческий режим «Обучение» и «Самоконтроль»'
-              control='input'
-              type='checkbox'
-              name='typeModules'
-            />
-            <Form.Field
-              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
-              label='преподавательский режим «Текущий контроль», включая режим «Сессия», по федеральным ПИМ'
-              control='input'
-              type='checkbox'
-              name='typeModules'
-            />
-            <Form.Field
-              onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
-              label='модуль «Тест-Конструктор» и преподавательский режим «Текущий контроль», включая режим «Сессия», по ПИМ, разработанным преподавателями образовательной организации'
-              control='input'
-              type='checkbox'
-              name='typeModules'
-            />
+            {this.props.education[this.props.activeEducation].modules.map(modules => (
+              <Form.Field
+                onChange={(e) => this.props.selectModuleEducation(e.target.checked)}
+                label={modules}
+                control='input'
+                type='checkbox'
+                name='typeModules'
+              />
+            ))}
           </Form.Group>
-
+            : ''}
+  
           <Form.Field >
             <label>Общая численность студентов, обучающихся в ОО*</label>
             <Input onChange={e => this.props.readingInput(e.target.value)} placeholder='Введите численность студентов' />
@@ -113,9 +92,11 @@ class RegistrationAplication extends Component {
 
 const mapStateToProps = (store) => {
   return {
+    activeEducation: store.activeEducation,
     region: store.region,
     education: store.education,
-    fullPrice: store.fullPrice
+    fullPrice: store.fullPrice,
+    showModules: store.showModules
   };
 };
 
@@ -125,8 +106,9 @@ const mapDistatchToProps = (dispatch) => {
     selectTypeEducation: selectTypeEducation,
     selectModuleEducation: selectModuleEducation,
     readingInput: readingInput,
+    showModule: showModules,
+    resetModules: resetModules
   }, dispatch)
 }
 
 export default connect(mapStateToProps, mapDistatchToProps)(RegistrationAplication);
-

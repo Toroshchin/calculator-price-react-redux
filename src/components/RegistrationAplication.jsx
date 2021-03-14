@@ -76,10 +76,10 @@ class RegistrationAplication extends Component {
             ))}
           </Form.Group>
             : ''}
-  
+
           <Form.Field >
             <label>Общая численность студентов, обучающихся в ОО*</label>
-            <Input onChange={e => this.props.readingInput(e.target.value)} placeholder='Введите численность студентов' />
+            <Input type='number' onChange={e => this.props.readingInput(e.target.value)} placeholder='Введите численность студентов' />
           </Form.Field>
           <Button>Регистрация</Button>
           <label>Общая цена: {this.props.fullPrice}</label>

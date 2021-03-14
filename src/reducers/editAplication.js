@@ -1,38 +1,52 @@
 import initialState from '../initialState'
+import Immutable from 'seamless-immutable'
 
-export default function Store(state = initialState, action) {
+export default function Store(state = Immutable(initialState), action) {
   switch (action.type) {
+    case 'SHOW_MODULES':
+      return state.set('showModules', true)
+
+    case 'RESET_MODULES':
+      let modules = state.education[state.activeEducation].minModules
+      return state.set('quantityModules', modules)
+
     case 'SELECT_EDUCATION':
-      state.activeEducation = action.payload - 1
-      console.log('Тип образования: ' + state.activeEducation)
-      return state
+      console.log(state.activeEducation)
+      state.set('showModules', true)
+      console.log(state.showModules)
+      return state.set('activeEducation', action.payload - 1)
+
     case 'SELECT_TYPE_EDUCATION':
-      state.activeTypeEducation = action.payload - 1
       console.log('Тип образовательной организации: ' + state.activeTypeEducation)
-      return state
+      return state.set('activeTypeEducation', action.payload - 1)
+
     case 'SELECT_MODULE_EDUCATION':
+      let moduls
       if (action.payload === true) {
-        state.module++
+        moduls = state.quantityModules + 1
       } else {
-        state.module--
+        moduls = state.quantityModules - 1
       }
-      console.log('Модули: ' + state.module)
-      return state
+      console.log('Модули: ' + state.quantityModules)
+      return state.set('quantityModules', moduls)
+
     case 'READING_INPUT':
-      state.fullPeople = action.payload
-      const store = state.education[state.activeEducation].prices[state.activeTypeEducation]
-      const length = state.education[state.activeEducation].prices[state.activeTypeEducation].length
-      for (let i = 0; i < length; i++) {
-        if (store[i].minPeople <= action.payload && store[i].maxPeople >= action.payload) {
-          state.fullPrice = store[i].price[state.module - 1]
+      let price
+      for (let i = 0; i < state.education[state.activeEducation].prices[state.activeTypeEducation].length; i++) {
+        if (
+          state.education[state.activeEducation].prices[state.activeTypeEducation][i].minPeople <= action.payload &&
+          state.education[state.activeEducation].prices[state.activeTypeEducation][i].maxPeople >= action.payload
+        ) {
+          price =
+            state.education[state.activeEducation].prices[state.activeTypeEducation][i].price[state.quantityModules - 1]
         }
       }
-      console.log(state.fullPrice)
-      return state
+
+      console.log('Люди' + action.payload)
+      console.log('Цена' + state.fullPrice)
+      return state.set('fullPrice', price)
 
     default:
-      break
+      return state
   }
-
-  return state
 }

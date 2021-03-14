@@ -1,9 +1,12 @@
-const initialState = {
+import Immutable from 'seamless-immutable'
+
+const initialState = Immutable({
   fullPrice: 0,
-  activeEducation: 0,
+  activeEducation: null,
   activeTypeEducation: 0,
-  module: 0,
   fullPeople: 0,
+  quantityModules: 0,
+  showModules: false,
   region: [
     { key: 1, value: 'Алтайский край', text: 'Алтайский край' },
     { key: 2, value: 'Амурская область', text: 'Амурская область' },
@@ -96,6 +99,13 @@ const initialState = {
       key: 1,
       value: 1,
       text: 'Интернет-тренажоры в сфере образования (март-июль 2021)',
+      minModules: 0,
+      moduleOff: true,
+      modules: [
+        'студенческий режим «Обучение» и «Самоконтроль»',
+        'преподавательский режим «Текущий контроль», включая режим «Сессия», по федеральным ПИМ',
+        'модуль «Тест-Конструктор» и преподавательский режим «Текущий контроль», включая режим «Сессия», по ПИМ, разработанным преподавателями образовательной организации',
+      ],
       prices: [
         [
           { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
@@ -117,27 +127,54 @@ const initialState = {
       key: 2,
       value: 2,
       text: 'Тренажёр Федерального интернет-экзамена для выпускников бакалавриата (Тренажёр ФИЭБ-2021)',
+      moduleOff: false,
+      minModules: 1,
       prices: [
-        { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
-        { minPeople: 1001, maxPeople: 3000, price: [33000, 37200, 40700] },
-        { minPeople: 3001, maxPeople: 10000, price: [40700, 46300, 52000] },
-        { minPeople: 10001, maxPeople: 30000, price: [52000, 56900, 60900] },
-        { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+        [
+          { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
+          { minPeople: 1001, maxPeople: 3000, price: [33000, 37200, 40700] },
+          { minPeople: 3001, maxPeople: 10000, price: [40700, 46300, 52000] },
+          { minPeople: 10001, maxPeople: 30000, price: [52000, 56900, 60900] },
+          { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+        ],
+        [
+          { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
+          { minPeople: 1001, maxPeople: 3000, price: [33000, 37200, 40700] },
+          { minPeople: 3001, maxPeople: 10000, price: [40700, 46300, 52000] },
+          { minPeople: 10001, maxPeople: 30000, price: [52000, 56900, 60900] },
+          { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+        ],
       ],
     },
     {
       key: 3,
       value: 3,
       text: 'Федеральный интернет-экзамен в сфере профессионального образования (ФЭПО) (март-июль 2021)',
+      moduleOff: true,
+      minModules: 0,
+      modules: [
+        'студенческий режим «Обучение» и «Самоконтроль»',
+        'преподавательский режим «Текущий контроль», включая режим «Сессия», по федеральным ПИМ',
+        'модуль «Тест-Конструктор» и преподавательский режим «Текущий контроль», включая режим «Сессия», по ПИМ, разработанным преподавателями образовательной организации',
+      ],
       prices: [
-        { minPeople: 1, maxPeople: 1000, price: 27400 },
-        { minPeople: 1001, maxPeople: 3000, price: 35100 },
-        { minPeople: 3001, maxPeople: 10000, price: 43600 },
-        { minPeople: 10001, maxPeople: 30000, price: 54500 },
-        { minPeople: 30000, maxPeople: 1000000, price: 59900 },
+        [
+          { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
+          { minPeople: 1001, maxPeople: 3000, price: [33000, 37200, 40700] },
+          { minPeople: 3001, maxPeople: 10000, price: [40700, 46300, 52000] },
+          { minPeople: 10001, maxPeople: 30000, price: [52000, 56900, 60900] },
+          { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+        ],
+        [
+          { minPeople: 1, maxPeople: 1000, price: [25200, 29500, 37600] },
+          { minPeople: 1001, maxPeople: 3000, price: [33000, 37200, 40700] },
+          { minPeople: 3001, maxPeople: 10000, price: [40700, 46300, 52000] },
+          { minPeople: 10001, maxPeople: 30000, price: [52000, 56900, 60900] },
+          { minPeople: 30000, maxPeople: 1000000, price: [58100, 61800, 66100] },
+        ],
       ],
     },
     { key: 4, value: 4, text: 'Федеральный интернет-экзамен для выпускников бакалавриата 2021 (Вузы-участники)' },
   ],
-}
+})
 export default initialState
